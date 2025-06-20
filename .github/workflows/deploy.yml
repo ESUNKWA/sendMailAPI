@@ -23,7 +23,7 @@ jobs:
     - name: Deploy to server
       run: |
         ssh root@38.242.232.151 << 'EOF'
-          cd /chemin/vers/ton/projet
+          cd /var/www/html/sendMail
           git pull origin main
           composer install --no-interaction --prefer-dist --optimize-autoloader
           php artisan migrate --force
