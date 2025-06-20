@@ -18,11 +18,11 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 38.230.30.181 >> ~/.ssh/known_hosts
+        ssh-keyscan -H 38.242.232.151 >> ~/.ssh/known_hosts
 
     - name: Deploy to server
       run: |
-        ssh root@38.230.30.181 << 'EOF'
+        ssh root@38.242.232.151 << 'EOF'
           cd /chemin/vers/ton/projet
           git pull origin main
           composer install --no-interaction --prefer-dist --optimize-autoloader
