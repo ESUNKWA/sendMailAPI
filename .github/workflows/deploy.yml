@@ -1,0 +1,29 @@
+name: 🚀 Deploy Laravel Mail API
+
+on:
+  push:
+    branches:
+      - main  # ou master selon ta branche
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Cloner le repo
+        uses: actions/checkout@v3
+
+      - name: 🔐 Ajouter la clé SSH privée
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: 🧠 Ignorer l'authentification strict hôte SSH
+        run: |
+          echo -e "Host *\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+
+      - name: 🚀 Déployer le projet sur le serveur
+        run: |
+          ssh deployer@192.168.1.100 "cd /var/www/sendMailAPI && git pull origin main && php artisan migrate --force && php artisan config:cache && php artisan route:cache"
+
